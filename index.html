@@ -673,23 +673,76 @@
             .certs-grid { grid-template-columns: 1fr; }
         }
 
+        /* V2 Additions */
+        * { cursor: none; } /* Ocultar cursor nativo */
+        a, button, .contact-card { cursor: none; }
+        
+        #preloader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-color); z-index: 9999;
+            display: flex; justify-content: center; align-items: center;
+            transition: opacity 0.5s ease;
+        }
+        .loader-brand { font-size: 3rem; font-weight: 700; color: var(--primary); animation: pulse 1.5s infinite; letter-spacing: 2px; }
+        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.9); } }
+
+        .scroll-progress { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: linear-gradient(90deg, var(--primary), var(--secondary)); z-index: 10000; transition: width 0.1s; }
+
+        .cursor-dot { width: 6px; height: 6px; background-color: var(--secondary); border-radius: 50%; position: fixed; pointer-events: none; z-index: 10001; transform: translate(-50%, -50%); transition: opacity 0.3s; opacity: 0; }
+        .cursor-outline { width: 40px; height: 40px; border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 50%; position: fixed; pointer-events: none; z-index: 10001; transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s, background 0.2s, border-color 0.2s, opacity 0.3s; opacity: 0; }
+        body:hover .cursor-dot { opacity: 1; }
+        body:hover .cursor-outline { opacity: 1; }
+        .cursor-outline.hover { width: 60px; height: 60px; background: rgba(59, 130, 246, 0.15); border-color: var(--primary); }
+
+        .glass-card { transform-style: preserve-3d; perspective: 1000px; transform: perspective(1000px) rotateX(0) rotateY(0); }
+        .glass-card > * { transform: translateZ(30px); }
+
+        .lang-btn { background: transparent; border: 1px solid var(--primary); color: var(--primary); padding: 4px 12px; border-radius: 20px; font-family: inherit; font-size: 0.85rem; font-weight: 600; margin-left: 1rem; transition: all 0.3s; }
+        .lang-btn:hover { background: var(--primary); color: white; transform: scale(1.05); }
+
+        #canvas-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+        
+        #proyectos { background-color: var(--bg-color); }
+        .proyectos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; }
+        .proyecto-card { position: relative; overflow: hidden; border-radius: 16px; min-height: 250px; display: flex; flex-direction: column; justify-content: flex-end; padding: 2.5rem; background: var(--glass-bg); border: 1px solid var(--glass-border); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-decoration: none; color: white; }
+        .proyecto-card::before { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(11, 18, 32, 0.9) 0%, rgba(11, 18, 32, 0.1) 100%); z-index: 1; }
+        .proyecto-info { position: relative; z-index: 2; transform: translateY(20px); transition: transform 0.4s ease; }
+        .proyecto-card:hover .proyecto-info { transform: translateY(0); }
+        .proyecto-title { font-size: 1.6rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-main); }
+        .proyecto-desc { color: var(--secondary); font-size: 0.95rem; opacity: 0; transition: opacity 0.4s ease; }
+        .proyecto-card:hover .proyecto-desc { opacity: 1; }
+        
+        @media (max-width: 768px) {
+            .proyectos-grid { grid-template-columns: 1fr; }
+            * { cursor: auto; }
+            a, button, .contact-card { cursor: pointer; }
+            .cursor-dot, .cursor-outline { display: none; }
+            .proyecto-info { transform: translateY(0); }
+            .proyecto-desc { opacity: 1; }
+        }
+
     </style>
 </head>
 <body>
+    <div id="preloader"><div class="loader-brand">MA</div></div>
+    <div class="scroll-progress" id="scrollProgress"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-outline" id="cursorOutline"></div>
 
     <nav>
         <a href="#hero" class="brand">MA</a>
         <div class="nav-links">
-            <a href="#sobre-mi" class="nav-item">Sobre mí</a>
-            <a href="#habilidades" class="nav-item">Habilidades</a>
-            <a href="#formacion" class="nav-item">Formación</a>
-            <a href="#certificaciones" class="nav-item">Certificados</a>
-            <a href="#contacto" class="nav-item">Contacto</a>
+            <a href="#sobre-mi" class="nav-item" data-i18n="navSobre">Sobre mí</a>
+            <a href="#habilidades" class="nav-item" data-i18n="navHabilidades">Habilidades</a>
+            <a href="#proyectos" class="nav-item" data-i18n="navProyectos">Proyectos</a>
+            <a href="#formacion" class="nav-item" data-i18n="navFormacion">Formación</a>
+            <a href="#contacto" class="nav-item" data-i18n="navContacto">Contacto</a>
+            <button class="lang-btn" id="langToggle">EN</button>
         </div>
     </nav>
 
     <section id="hero">
-        <div class="hero-bg" id="heroBg"></div>
+        <canvas id="canvas-bg"></canvas>
         <div class="container" style="z-index: 2; position: relative;">
             <div class="typing-label">Economía · Finanzas · Datos<span class="cursor"></span></div>
             <h1 class="hero-title" id="heroTitle">
@@ -763,6 +816,27 @@
                     <h3>Gestión & Liderazgo</h3>
                     <p>Comunicación, trabajo en equipo, organización. Certificado en liderazgo por F.C.E.E.</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="proyectos">
+        <div class="container">
+            <div class="section-label reveal">03 / PROYECTOS</div>
+            <h2 class="reveal" data-i18n="proyectosTitle" style="text-align: center;">Casos de Estudio</h2>
+            <div class="proyectos-grid">
+                <a href="#contacto" class="proyecto-card reveal stagger-1 glass-card">
+                    <div class="proyecto-info">
+                        <div class="proyecto-title" data-i18n="p1Title">Dashboard Financiero</div>
+                        <div class="proyecto-desc" data-i18n="p1Desc">Modelo en PowerBI para análisis predictivo de flujo de caja y gestión de riesgo.</div>
+                    </div>
+                </a>
+                <a href="#contacto" class="proyecto-card reveal stagger-2 glass-card">
+                    <div class="proyecto-info">
+                        <div class="proyecto-title" data-i18n="p2Title">Modelo Macroeconómico</div>
+                        <div class="proyecto-desc" data-i18n="p2Desc">Regresión lineal en Excel avanzado para interpretar indicadores de inflación.</div>
+                    </div>
+                </a>
             </div>
         </div>
     </section>
@@ -847,32 +921,191 @@
     </section>
 
     <script>
-        // Hero background floatings dots
-        const heroBg = document.getElementById('heroBg');
-        const numDots = 10;
-        const colors = ['rgba(59, 130, 246, 0.4)', 'rgba(6, 182, 212, 0.3)'];
+        // 1. Preloader
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            setTimeout(() => {
+                preloader.style.opacity = '0';
+                setTimeout(() => preloader.style.display = 'none', 500);
+            }, 800);
+        });
+
+        // 2. Custom Cursor
+        const cursorDot = document.getElementById('cursorDot');
+        const cursorOutline = document.getElementById('cursorOutline');
+        let cursorX = 0, cursorY = 0;
+        let outlineX = 0, outlineY = 0;
         
-        for (let i = 0; i < numDots; i++) {
-            const dot = document.createElement('div');
-            dot.className = 'floating-dot';
-            
-            // Random attributes
-            const size = Math.random() * 8 + 6; // 6px to 14px
-            const posX = Math.random() * 100;
-            const posY = Math.random() * 100;
-            const duration = Math.random() * 8 + 10; // 10s to 18s
-            const delay = Math.random() * 5;
-            const color = colors[Math.floor(Math.random() * colors.length)];
-            
-            dot.style.width = `${size}px`;
-            dot.style.height = `${size}px`;
-            dot.style.left = `${posX}%`;
-            dot.style.top = `${posY}%`;
-            dot.style.backgroundColor = color;
-            dot.style.animationDuration = `${duration}s`;
-            dot.style.animationDelay = `${delay}s`;
-            
-            heroBg.appendChild(dot);
+        document.addEventListener('mousemove', (e) => {
+            cursorX = e.clientX;
+            cursorY = e.clientY;
+            cursorDot.style.left = `${cursorX}px`;
+            cursorDot.style.top = `${cursorY}px`;
+        });
+        
+        function loopCursor() {
+            outlineX += (cursorX - outlineX) * 0.15;
+            outlineY += (cursorY - outlineY) * 0.15;
+            cursorOutline.style.left = `${outlineX}px`;
+            cursorOutline.style.top = `${outlineY}px`;
+            requestAnimationFrame(loopCursor);
+        }
+        loopCursor();
+        
+        document.querySelectorAll('a, button, .contact-card, .proyecto-card').forEach(el => {
+            el.addEventListener('mouseenter', () => cursorOutline.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursorOutline.classList.remove('hover'));
+        });
+
+        // 3. Scroll Progress
+        const scrollProgress = document.getElementById('scrollProgress');
+        window.addEventListener('scroll', () => {
+            const totalScroll = document.documentElement.scrollTop;
+            const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scroll = `${(totalScroll / windowHeight) * 100}%`;
+            scrollProgress.style.width = scroll;
+        }, { passive: true });
+
+        // 4. Canvas Particles (Interactive Data Neural Net)
+        const canvas = document.getElementById('canvas-bg');
+        if(canvas) {
+            const ctx = canvas.getContext('2d');
+            let particlesArray;
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+
+            let mouse = { x: null, y: null, radius: 150 };
+            document.addEventListener('mousemove', (e) => { mouse.x = e.x; mouse.y = e.y; });
+            document.addEventListener('mouseout', () => { mouse.x = undefined; mouse.y = undefined; });
+
+            class Particle {
+                constructor(x, y, dx, dy, size) {
+                    this.x = x; this.y = y; this.dx = dx; this.dy = dy; this.size = size;
+                    this.baseX = this.x; this.baseY = this.y;
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                    ctx.fillStyle = 'rgba(6, 182, 212, 0.4)';
+                    ctx.fill();
+                }
+                update() {
+                    if (this.x > canvas.width || this.x < 0) this.dx = -this.dx;
+                    if (this.y > canvas.height || this.y < 0) this.dy = -this.dy;
+                    
+                    let dxMouse = mouse.x - this.x;
+                    let dyMouse = mouse.y - this.y;
+                    let distanceMouse = Math.sqrt(dxMouse*dxMouse + dyMouse*dyMouse);
+                    
+                    if (distanceMouse < mouse.radius) {
+                        const forceDirectionX = dxMouse / distanceMouse;
+                        const forceDirectionY = dyMouse / distanceMouse;
+                        const force = (mouse.radius - distanceMouse) / mouse.radius;
+                        this.x -= forceDirectionX * force * 5;
+                        this.y -= forceDirectionY * force * 5;
+                    } else {
+                        if(this.x !== this.baseX) { this.x -= (this.x - this.baseX)/10; }
+                        if(this.y !== this.baseY) { this.y -= (this.y - this.baseY)/10; }
+                    }
+
+                    this.baseX += this.dx;
+                    this.baseY += this.dy;
+                    this.x += this.dx;
+                    this.y += this.dy;
+                    this.draw();
+                }
+            }
+
+            function initParticles() {
+                particlesArray = [];
+                let numberOfParticles = (canvas.height * canvas.width) / 10000;
+                for (let i = 0; i < numberOfParticles; i++) {
+                    let size = (Math.random() * 2) + 1;
+                    let x = (Math.random() * ((canvas.width - size * 2) - (size * 2)) + size * 2);
+                    let y = (Math.random() * ((canvas.height - size * 2) - (size * 2)) + size * 2);
+                    let dx = (Math.random() - 0.5) * 0.8;
+                    let dy = (Math.random() - 0.5) * 0.8;
+                    particlesArray.push(new Particle(x, y, dx, dy, size));
+                }
+            }
+
+            function animateParticles() {
+                requestAnimationFrame(animateParticles);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (let i = 0; i < particlesArray.length; i++) { particlesArray[i].update(); }
+                connectParticles();
+            }
+
+            function connectParticles() {
+                let opacityValue = 1;
+                for(let a=0; a < particlesArray.length; a++){
+                    for(let b=a; b < particlesArray.length; b++){
+                        let distance = ((particlesArray[a].x - particlesArray[b].x)* (particlesArray[a].x - particlesArray[b].x)) + 
+                                       ((particlesArray[a].y - particlesArray[b].y)* (particlesArray[a].y - particlesArray[b].y));
+                        if(distance < (canvas.width/8) * (canvas.height/8)) {
+                            opacityValue = 1 - (distance/12000);
+                            ctx.strokeStyle = 'rgba(59, 130, 246, ' + opacityValue/2 + ')';
+                            ctx.lineWidth = 1;
+                            ctx.beginPath();
+                            ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                            ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+
+            window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
+            initParticles();
+            animateParticles();
+        }
+
+        // 5. 3D Tilt Effect on static cards
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const xPct = (x / rect.width - 0.5) * 2;
+                const yPct = (y / rect.height - 0.5) * -2;
+                card.style.transform = `perspective(1000px) rotateX(${yPct * 8}deg) rotateY(${xPct * 8}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)`;
+            });
+        });
+
+        // 6. i18n Language Toggle
+        const dict = {
+            es: {
+                navSobre: "Sobre mí", navHabilidades: "Habilidades", navProyectos: "Proyectos", navFormacion: "Formación", navContacto: "Contacto",
+                proyectosTitle: "Casos de Estudio",
+                p1Title: "Dashboard Financiero", p1Desc: "Modelo en PowerBI para análisis predictivo de flujo de caja y gestión de riesgo.",
+                p2Title: "Modelo Macroeconómico", p2Desc: "Regresión lineal en Excel avanzado para interpretar indicadores de inflación."
+            },
+            en: {
+                navSobre: "About Me", navHabilidades: "Skills", navProyectos: "Projects", navFormacion: "Education", navContacto: "Contact",
+                proyectosTitle: "Case Studies",
+                p1Title: "Financial Dashboard", p1Desc: "PowerBI model for predictive cash flow analysis and risk management.",
+                p2Title: "Macroeconomic Model", p2Desc: "Advanced Excel linear regression to interpret inflation indicators."
+            }
+        };
+
+        let currentLang = 'es';
+        const langToggle = document.getElementById('langToggle');
+        if(langToggle) {
+            langToggle.addEventListener('click', () => {
+                currentLang = currentLang === 'es' ? 'en' : 'es';
+                langToggle.textContent = currentLang === 'es' ? 'EN' : 'ES';
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if(dict[currentLang] && dict[currentLang][key]) el.textContent = dict[currentLang][key];
+                });
+            });
         }
 
         // Hero Typography Animation
