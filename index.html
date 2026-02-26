@@ -647,6 +647,8 @@
         .stagger-2 { transition-delay: 250ms; }
         .stagger-3 { transition-delay: 400ms; }
 
+        .hamburger { display: none; }
+        
         /* Mobile Adjustments */
         @media (max-width: 992px) {
             .sobre-grid { grid-template-columns: 1fr; gap: 3rem; }
@@ -656,7 +658,20 @@
         }
 
         @media (max-width: 768px) {
-            .nav-links { display: none; }
+            .hamburger { display: flex; flex-direction: column; justify-content: space-between; width: 22px; height: 16px; background: transparent; border: none; z-index: 1000; cursor: pointer; }
+            .hamburger span { width: 22px; height: 2px; background: white; display: block; transition: all 0.3s; }
+            .hamburger.open span:nth-child(1) { transform: rotate(45deg) translateY(9px) translateX(1px); }
+            .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+            .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translateY(-9px) translateX(1px); }
+            
+            .nav-links { 
+                position: fixed; top: 70px; left: 0; width: 100%; 
+                background: rgba(11,18,32,0.97); backdrop-filter: blur(20px); 
+                flex-direction: column; align-items: center; gap: 2rem; padding: 2rem; 
+                transform: translateY(-110%); transition: transform 0.35s cubic-bezier(0.16,1,0.3,1); 
+                display: flex;
+            }
+            .nav-links.open { transform: translateY(0); }
             .hero-title { font-size: 2.8rem; }
             .skills-grid { grid-template-columns: 1fr; gap: 1.5rem; }
             .contact-grid { grid-template-columns: 1fr; gap: 1.5rem; }
@@ -695,9 +710,10 @@
         .cursor-outline.hover { width: 60px; height: 60px; background: rgba(59, 130, 246, 0.15); border-color: var(--primary); }
 
         .glass-card { transform-style: preserve-3d; perspective: 1000px; transform: perspective(1000px) rotateX(0) rotateY(0); }
-        .glass-card > * { transform: translateZ(30px); }
 
         .lang-btn { background: transparent; border: 1px solid var(--primary); color: var(--primary); padding: 4px 12px; border-radius: 20px; font-family: inherit; font-size: 0.85rem; font-weight: 600; margin-left: 1rem; transition: all 0.3s; }
+        .lang-btn.en-active { border-color: var(--secondary); color: var(--secondary); }
+        [data-i18n] { transition: opacity 0.2s ease; }
         .lang-btn:hover { background: var(--primary); color: white; transform: scale(1.05); }
 
         #canvas-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
@@ -731,7 +747,8 @@
 
     <nav>
         <a href="#hero" class="brand">MA</a>
-        <div class="nav-links">
+        <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+        <div class="nav-links" id="navLinks">
             <a href="#sobre-mi" class="nav-item" data-i18n="navSobre">Sobre mí</a>
             <a href="#habilidades" class="nav-item" data-i18n="navHabilidades">Habilidades</a>
             <a href="#proyectos" class="nav-item" data-i18n="navProyectos">Proyectos</a>
@@ -744,16 +761,16 @@
     <section id="hero">
         <canvas id="canvas-bg"></canvas>
         <div class="container" style="z-index: 2; position: relative;">
-            <div class="typing-label">Economía · Finanzas · Datos<span class="cursor"></span></div>
+            <div class="typing-label"><span data-i18n="heroLabel">Economía · Finanzas · Datos</span><span class="cursor"></span></div>
             <h1 class="hero-title" id="heroTitle">
                 <span class="line1" data-text="Miguel Ángel"></span>
                 <span class="line2" data-text="Paco Callamullo"></span>
             </h1>
-            <p class="hero-subtitle">Estudiante de Economía en UAGRM · 5to Semestre</p>
-            <p class="hero-tagline">"Transformando datos en decisiones."</p>
+            <p class="hero-subtitle" data-i18n="heroSubtitle">Estudiante de Economía en UAGRM · 5to Semestre</p>
+            <p class="hero-tagline" data-i18n="heroTagline">"Transformando datos en decisiones."</p>
             <div class="cta-group">
-                <a href="#sobre-mi" class="btn btn-primary">Ver mi perfil ↓</a>
-                <a href="#contacto" class="btn btn-outline">Contactar</a>
+                <a href="#sobre-mi" class="btn btn-primary" data-i18n="heroCta1">Ver mi perfil ↓</a>
+                <a href="#contacto" class="btn btn-outline" data-i18n="heroCta2">Contactar</a>
             </div>
         </div>
     </section>
@@ -762,33 +779,33 @@
         <div class="container">
             <div class="sobre-grid">
                 <div class="bio-content reveal">
-                    <div class="section-label">01 / SOBRE MÍ</div>
-                    <h2>Apasionado por los datos y la economía.</h2>
+                    <div class="section-label" data-i18n="sobreLabel">01 / SOBRE MÍ</div>
+                    <h2 data-i18n="sobreH2">Apasionado por los datos y la economía.</h2>
                     <div class="bio-text">
-                        <p>Soy Miguel Ángel, estudiante de 5to semestre de Economía con una fuerte orientación hacia el análisis cuantitativo. Mi enfoque principal es entender cómo las variables económicas interactúan y aplicar modelos estadísticos para resolver problemas reales.</p>
-                        <p>Durante mi trayectoria académica, he desarrollado habilidades excepcionales en herramientas de análisis y contabilidad, buscando siempre transformar conjuntos de datos complejos en información clave para la toma de decisiones estratégicas. Me considero una persona proactiva y con gran capacidad de liderazgo.</p>
+                        <p data-i18n="sobreBio1">Soy Miguel Ángel, estudiante de 5to semestre de Economía con una fuerte orientación hacia el análisis cuantitativo. Mi enfoque principal es entender cómo las variables económicas interactúan y aplicar modelos estadísticos para resolver problemas reales.</p>
+                        <p data-i18n="sobreBio2">Durante mi trayectoria académica, he desarrollado habilidades excepcionales en herramientas de análisis y contabilidad, buscando siempre transformar conjuntos de datos complejos en información clave para la toma de decisiones estratégicas. Me considero una persona proactiva y con gran capacidad de liderazgo.</p>
                     </div>
                     <div class="skills-pills">
-                        <span class="pill">Excel Avanzado</span>
-                        <span class="pill">Estadística</span>
-                        <span class="pill">Modelación Económica</span>
-                        <span class="pill">Contabilidad</span>
-                        <span class="pill">Análisis de Riesgo</span>
-                        <span class="pill">Hojas de Cálculo</span>
+                        <span class="pill" data-i18n="pill1">Excel Avanzado</span>
+                        <span class="pill" data-i18n="pill2">Estadística</span>
+                        <span class="pill" data-i18n="pill3">Modelación Económica</span>
+                        <span class="pill" data-i18n="pill4">Contabilidad</span>
+                        <span class="pill" data-i18n="pill5">Análisis de Riesgo</span>
+                        <span class="pill" data-i18n="pill6">Hojas de Cálculo</span>
                     </div>
                 </div>
                 <div class="stats-grid reveal stagger-1" id="stats-section">
                     <div class="stat-card glass-card">
                         <div class="stat-num counter" data-target="5">0</div>
-                        <div class="stat-text">Semestre UAGRM</div>
+                        <div class="stat-text" data-i18n="stat1Text">Semestre UAGRM</div>
                     </div>
                     <div class="stat-card glass-card">
                         <div class="stat-num counter" data-target="2">0</div>
-                        <div class="stat-text">Certificados Completados</div>
+                        <div class="stat-text" data-i18n="stat2Text">Certificados Completados</div>
                     </div>
                     <div class="stat-card glass-card" style="grid-column: span 2;">
                         <div class="stat-num">Destacado</div>
-                        <div class="stat-text">Alumno Bachillerato</div>
+                        <div class="stat-text" data-i18n="stat3Text">Alumno Bachillerato</div>
                     </div>
                 </div>
             </div>
@@ -797,24 +814,24 @@
 
     <section id="habilidades">
         <div class="container">
-            <div class="section-label reveal" style="text-align: center;">02 / HABILIDADES</div>
-            <h2 class="reveal" style="text-align: center;">¿Qué puedo aportar?</h2>
+            <div class="section-label reveal" style="text-align: center;" data-i18n="habLabel">02 / HABILIDADES</div>
+            <h2 class="reveal" style="text-align: center;" data-i18n="habH2">¿Qué puedo aportar?</h2>
             
             <div class="skills-grid">
                 <div class="skill-card glass-card reveal stagger-1">
                     <div class="skill-icon">📊</div>
-                    <h3>Análisis de Datos</h3>
-                    <p>Excel avanzado, modelación estadística, interpretación de indicadores económicos.</p>
+                    <h3 data-i18n="hab1Title">Análisis de Datos</h3>
+                    <p data-i18n="hab1Desc">Excel avanzado, modelación estadística, interpretación de indicadores económicos.</p>
                 </div>
                 <div class="skill-card glass-card reveal stagger-2">
                     <div class="skill-icon">💹</div>
-                    <h3>Finanzas & Economía</h3>
-                    <p>Microeconomía, análisis financiero, gestión de riesgos y toma de decisiones cuantitativa.</p>
+                    <h3 data-i18n="hab2Title">Finanzas & Economía</h3>
+                    <p data-i18n="hab2Desc">Microeconomía, análisis financiero, gestión de riesgos y toma de decisiones cuantitativa.</p>
                 </div>
                 <div class="skill-card glass-card reveal stagger-3">
                     <div class="skill-icon">📋</div>
-                    <h3>Gestión & Liderazgo</h3>
-                    <p>Comunicación, trabajo en equipo, organización. Certificado en liderazgo por F.C.E.E.</p>
+                    <h3 data-i18n="hab3Title">Gestión & Liderazgo</h3>
+                    <p data-i18n="hab3Desc">Comunicación, trabajo en equipo, organización. Certificado en liderazgo por F.C.E.E.</p>
                 </div>
             </div>
         </div>
@@ -822,7 +839,7 @@
 
     <section id="proyectos">
         <div class="container">
-            <div class="section-label reveal">03 / PROYECTOS</div>
+            <div class="section-label reveal" data-i18n="proyLabel">03 / PROYECTOS</div>
             <h2 class="reveal" data-i18n="proyectosTitle" style="text-align: center;">Casos de Estudio</h2>
             <div class="proyectos-grid">
                 <a href="#contacto" class="proyecto-card reveal stagger-1 glass-card">
@@ -843,42 +860,42 @@
 
     <section id="formacion">
         <div class="container">
-            <div class="section-label reveal">03 / FORMACIÓN</div>
-            <h2 class="reveal">Mi trayectoria académica</h2>
+            <div class="section-label reveal" data-i18n="formLabel">04 / FORMACIÓN</div>
+            <h2 class="reveal" data-i18n="formH2">Mi trayectoria académica</h2>
             
             <div class="timeline-container" id="timeline">
                 <div class="timeline-line" id="timelineLine"></div>
                 
                 <div class="timeline-item reveal">
                     <div class="timeline-dot"></div>
-                    <div class="timeline-year">2023 – Presente</div>
-                    <div class="timeline-inst">Universidad Autónoma Gabriel René Moreno (UAGRM)</div>
-                    <div class="timeline-title">Lic. Economía — 5to Semestre en curso</div>
+                    <div class="timeline-year" data-i18n="year1">2023 – Presente</div>
+                    <div class="timeline-inst" data-i18n="inst1">Universidad Autónoma Gabriel René Moreno (UAGRM)</div>
+                    <div class="timeline-title" data-i18n="title1">Lic. Economía — 5to Semestre en curso</div>
                 </div>
                 
                 <div class="timeline-item reveal">
                     <div class="timeline-dot"></div>
-                    <div class="timeline-year">2013 – 2023</div>
-                    <div class="timeline-inst">U.D. Doctor Hernández Sanabria Fernández</div>
-                    <div class="timeline-title">Bachiller en Humanidades — Alumno Destacado</div>
+                    <div class="timeline-year" data-i18n="year2">2013 – 2023</div>
+                    <div class="timeline-inst" data-i18n="inst2">U.D. Doctor Hernández Sanabria Fernández</div>
+                    <div class="timeline-title" data-i18n="title2">Bachiller en Humanidades — Alumno Destacado</div>
                 </div>
             </div>
 
             <div class="cert-container" id="certificaciones">
-                <h3 class="reveal">Certificaciones</h3>
+                <h3 class="reveal" data-i18n="certsH3">Certificaciones</h3>
                 <div class="certs-grid">
                     <div class="cert-card glass-card reveal stagger-1">
                         <div class="skill-icon">🏆</div>
                         <div class="cert-info">
-                            <h4>De emprender a empresario</h4>
-                            <p>UAGRM</p>
+                            <h4 data-i18n="cert1Title">De emprender a empresario</h4>
+                            <p data-i18n="cert1Org">UAGRM</p>
                         </div>
                     </div>
                     <div class="cert-card glass-card reveal stagger-2">
                         <div class="skill-icon">⭐</div>
                         <div class="cert-info">
-                            <h4>Liderazgo</h4>
-                            <p>F.C.E.E.</p>
+                            <h4 data-i18n="cert2Title">Liderazgo</h4>
+                            <p data-i18n="cert2Org">F.C.E.E.</p>
                         </div>
                     </div>
                 </div>
@@ -888,13 +905,13 @@
 
     <section id="contacto">
         <div class="container">
-            <div class="section-label reveal">04 / CONTACTO</div>
-            <h2 class="reveal">¿Trabajamos juntos?</h2>
-            <p class="contact-subtitle reveal">Disponible para proyectos, colaboraciones y oportunidades académicas.</p>
+            <div class="section-label reveal" data-i18n="contLabel">05 / CONTACTO</div>
+            <h2 class="reveal" data-i18n="contH2">¿Trabajamos juntos?</h2>
+            <p class="contact-subtitle reveal" data-i18n="contSubtitle">Disponible para proyectos, colaboraciones y oportunidades académicas.</p>
             
             <div class="contact-grid">
                 <div class="contact-card glass-card reveal stagger-1" id="emailCard" style="cursor: pointer;">
-                    <div class="tooltip" id="emailTooltip">¡Copiado!</div>
+                    <div class="tooltip" id="emailTooltip" data-i18n="tooltipCopied">¡Copiado!</div>
                     <svg class="contact-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
                     </svg>
@@ -1082,16 +1099,110 @@
         // 6. i18n Language Toggle
         const dict = {
             es: {
-                navSobre: "Sobre mí", navHabilidades: "Habilidades", navProyectos: "Proyectos", navFormacion: "Formación", navContacto: "Contacto",
-                proyectosTitle: "Casos de Estudio",
-                p1Title: "Dashboard Financiero", p1Desc: "Modelo en PowerBI para análisis predictivo de flujo de caja y gestión de riesgo.",
-                p2Title: "Modelo Macroeconómico", p2Desc: "Regresión lineal en Excel avanzado para interpretar indicadores de inflación."
+                navSobre: "Sobre mí",
+                navHabilidades: "Habilidades",
+                navProyectos: "Proyectos",
+                navFormacion: "Formación",
+                navContacto: "Contacto",
+                heroLabel: "Economía · Finanzas · Datos",
+                heroSubtitle: "Estudiante de Economía en UAGRM · 5to Semestre",
+                heroTagline: '"Transformando datos en decisiones."',
+                heroCta1: "Ver mi perfil ↓",
+                heroCta2: "Contactar",
+                sobreLabel: "01 / SOBRE MÍ",
+                sobreH2: "Apasionado por los datos y la economía.",
+                sobreBio1: "Soy Miguel Ángel, estudiante de 5to semestre de Economía con una fuerte orientación hacia el análisis cuantitativo. Mi enfoque principal es entender cómo las variables económicas interactúan y aplicar modelos estadísticos para resolver problemas reales.",
+                sobreBio2: "Durante mi trayectoria académica, he desarrollado habilidades excepcionales en herramientas de análisis y contabilidad, buscando siempre transformar conjuntos de datos complejos en información clave para la toma de decisiones estratégicas. Me considero una persona proactiva y con gran capacidad de liderazgo.",
+                pill1: "Excel Avanzado", pill2: "Estadística", pill3: "Modelación Económica",
+                pill4: "Contabilidad", pill5: "Análisis de Riesgo", pill6: "Hojas de Cálculo",
+                stat1Text: "Semestre UAGRM",
+                stat2Text: "Certificados Completados",
+                stat3Text: "Alumno Bachillerato",
+                habLabel: "02 / HABILIDADES",
+                habH2: "¿Qué puedo aportar?",
+                hab1Title: "Análisis de Datos",
+                hab1Desc: "Excel avanzado, modelación estadística, interpretación de indicadores económicos.",
+                hab2Title: "Finanzas & Economía",
+                hab2Desc: "Microeconomía, análisis financiero, gestión de riesgos y toma de decisiones cuantitativa.",
+                hab3Title: "Gestión & Liderazgo",
+                hab3Desc: "Comunicación, trabajo en equipo, organización. Certificado en liderazgo por F.C.E.E.",
+                proyLabel: "03 / PROYECTOS",
+                proyH2: "Casos de Estudio",
+                p1Title: "Dashboard Financiero",
+                p1Desc: "Modelo en PowerBI para análisis predictivo de flujo de caja y gestión de riesgo.",
+                p2Title: "Modelo Macroeconómico",
+                p2Desc: "Regresión lineal en Excel avanzado para interpretar indicadores de inflación.",
+                formLabel: "04 / FORMACIÓN",
+                formH2: "Mi trayectoria académica",
+                year1: "2023 – Presente",
+                inst1: "Universidad Autónoma Gabriel René Moreno (UAGRM)",
+                title1: "Lic. Economía — 5to Semestre en curso",
+                year2: "2013 – 2023",
+                inst2: "U.D. Doctor Hernández Sanabria Fernández",
+                title2: "Bachiller en Humanidades — Alumno Destacado",
+                certsH3: "Certificaciones",
+                cert1Title: "De emprender a empresario",
+                cert1Org: "UAGRM",
+                cert2Title: "Liderazgo",
+                cert2Org: "F.C.E.E.",
+                contLabel: "05 / CONTACTO",
+                contH2: "¿Trabajamos juntos?",
+                contSubtitle: "Disponible para proyectos, colaboraciones y oportunidades académicas.",
+                tooltipCopied: "¡Copiado!",
+                footerText: "Miguel Ángel Paco Callamullo · Santa Cruz de la Sierra, Bolivia · 2026"
             },
             en: {
-                navSobre: "About Me", navHabilidades: "Skills", navProyectos: "Projects", navFormacion: "Education", navContacto: "Contact",
-                proyectosTitle: "Case Studies",
-                p1Title: "Financial Dashboard", p1Desc: "PowerBI model for predictive cash flow analysis and risk management.",
-                p2Title: "Macroeconomic Model", p2Desc: "Advanced Excel linear regression to interpret inflation indicators."
+                navSobre: "About Me",
+                navHabilidades: "Skills",
+                navProyectos: "Projects",
+                navFormacion: "Education",
+                navContacto: "Contact",
+                heroLabel: "Economics · Finance · Data",
+                heroSubtitle: "Economics Student at UAGRM · 5th Semester",
+                heroTagline: '"Transforming data into decisions."',
+                heroCta1: "View my profile ↓",
+                heroCta2: "Contact me",
+                sobreLabel: "01 / ABOUT ME",
+                sobreH2: "Passionate about data and economics.",
+                sobreBio1: "I'm Miguel Ángel, a 5th semester Economics student with a strong focus on quantitative analysis. My main goal is to understand how economic variables interact and apply statistical models to solve real-world problems.",
+                sobreBio2: "Throughout my academic journey, I have developed exceptional skills in analysis and accounting tools, always seeking to transform complex datasets into key information for strategic decision-making. I consider myself a proactive person with strong leadership capabilities.",
+                pill1: "Advanced Excel", pill2: "Statistics", pill3: "Economic Modeling",
+                pill4: "Accounting", pill5: "Risk Analysis", pill6: "Spreadsheets",
+                stat1Text: "Semester at UAGRM",
+                stat2Text: "Completed Certificates",
+                stat3Text: "High School Honors",
+                habLabel: "02 / SKILLS",
+                habH2: "What can I bring to the table?",
+                hab1Title: "Data Analysis",
+                hab1Desc: "Advanced Excel, statistical modeling, interpretation of economic indicators.",
+                hab2Title: "Finance & Economics",
+                hab2Desc: "Microeconomics, financial analysis, risk management and quantitative decision-making.",
+                hab3Title: "Management & Leadership",
+                hab3Desc: "Communication, teamwork, organization. Certified in leadership by F.C.E.E.",
+                proyLabel: "03 / PROJECTS",
+                proyH2: "Case Studies",
+                p1Title: "Financial Dashboard",
+                p1Desc: "PowerBI model for predictive cash flow analysis and risk management.",
+                p2Title: "Macroeconomic Model",
+                p2Desc: "Advanced Excel linear regression to interpret inflation indicators.",
+                formLabel: "04 / EDUCATION",
+                formH2: "My academic journey",
+                year1: "2023 – Present",
+                inst1: "Autonomous University Gabriel René Moreno (UAGRM)",
+                title1: "B.S. Economics — 5th Semester (in progress)",
+                year2: "2013 – 2023",
+                inst2: "U.D. Doctor Hernández Sanabria Fernández",
+                title2: "High School Diploma — Honors Graduate",
+                certsH3: "Certifications",
+                cert1Title: "From Entrepreneur to Business Owner",
+                cert1Org: "UAGRM",
+                cert2Title: "Leadership",
+                cert2Org: "F.C.E.E.",
+                contLabel: "05 / CONTACT",
+                contH2: "Let's work together?",
+                contSubtitle: "Available for projects, collaborations and academic opportunities.",
+                tooltipCopied: "Copied!",
+                footerText: "Miguel Ángel Paco Callamullo · Santa Cruz de la Sierra, Bolivia · 2026"
             }
         };
 
@@ -1100,11 +1211,57 @@
         if(langToggle) {
             langToggle.addEventListener('click', () => {
                 currentLang = currentLang === 'es' ? 'en' : 'es';
+                
+                // Visual indicator text and styling
                 langToggle.textContent = currentLang === 'es' ? 'EN' : 'ES';
-                document.querySelectorAll('[data-i18n]').forEach(el => {
-                    const key = el.getAttribute('data-i18n');
-                    if(dict[currentLang] && dict[currentLang][key]) el.textContent = dict[currentLang][key];
+                if (currentLang === 'en') {
+                    langToggle.classList.add('en-active');
+                    document.title = "Miguel Ángel Paco Callamullo | Portfolio";
+                    document.documentElement.lang = "en";
+                } else {
+                    langToggle.classList.remove('en-active');
+                    document.title = "Miguel Ángel Paco Callamullo | Portafolio";
+                    document.documentElement.lang = "es";
+                }
+                
+                // Opacity fade transition
+                const i18nElements = document.querySelectorAll('[data-i18n]');
+                i18nElements.forEach(el => el.style.opacity = '0.6');
+                
+                setTimeout(() => {
+                    i18nElements.forEach(el => {
+                        const key = el.getAttribute('data-i18n');
+                        if(dict[currentLang] && dict[currentLang][key]) {
+                            el.textContent = dict[currentLang][key];
+                        }
+                        el.style.opacity = '1';
+                    });
+                }, 50);
+            });
+        }
+
+        // 7. Mobile Menu (Hamburger)
+        const hamburger = document.getElementById('hamburger');
+        const navLinksContainer = document.getElementById('navLinks');
+        
+        if(hamburger && navLinksContainer) {
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('open');
+                navLinksContainer.classList.toggle('open');
+            });
+            
+            navLinksContainer.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburger.classList.remove('open');
+                    navLinksContainer.classList.remove('open');
                 });
+            });
+            
+            document.addEventListener('click', (e) => {
+                if(!hamburger.contains(e.target) && !navLinksContainer.contains(e.target) && navLinksContainer.classList.contains('open')) {
+                    hamburger.classList.remove('open');
+                    navLinksContainer.classList.remove('open');
+                }
             });
         }
 
