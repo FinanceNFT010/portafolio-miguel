@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miguel Ángel Paco Callamullo | Portafolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:,">
+    <style>
+        :root {
+            --bg-color: #0b1220;
+            --bg-alt: #0f1a2e;
+            --primary: #3b82f6;
+            --secondary: #06b6d4;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Nav */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background: rgba(11, 18, 32, 0.8);
+            animation: fadeInNav 1s ease forwards;
+            opacity: 0;
+        }
+        
+        @keyframes fadeInNav {
+            to { opacity: 1; }
+        }
+
+        .brand {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--text-main);
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .brand:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 0.95rem;
+            position: relative;
+            transition: color 0.3s ease;
+            padding-bottom: 4px;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--text-main);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* Sections */
+        section {
+            padding: 8rem 5% 6rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .section-label {
+            color: var(--secondary);
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            line-height: 1.2;
+        }
+
+        /* Glassmorphism Classes */
+        .glass-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            will-change: transform;
+        }
+
+        /* Hero */
+        #hero {
+            position: relative;
+            overflow: hidden;
+            align-items: center;
+            text-align: center;
+            padding-top: 6rem;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: pulseBg 8s infinite alternate ease-in-out;
+        }
+
+        @keyframes pulseBg {
+            0% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        .floating-dot {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: drift 15s infinite alternate ease-in-out;
+            will-change: transform;
+        }
+
+        @keyframes drift {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(40px, -60px) scale(1.2); }
+        }
+
+        .typing-label {
+            color: var(--secondary);
+            font-size: 1.1rem;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            letter-spacing: 1px;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 1.1rem;
+            background-color: var(--secondary);
+            margin-left: 5px;
+            animation: blink 1s step-end infinite;
+            vertical-align: bottom;
+            position: relative;
+            top: -2px;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            color: var(--text-main);
+        }
+
+        .hero-title span {
+            display: inline-block;
+        }
+
+        .char {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px);
+            will-change: transform, opacity;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeInHero 1s ease forwards 1.2s;
+            font-weight: 300;
+        }
+
+        .hero-tagline {
+            font-size: 1.15rem;
+            color: var(--primary);
+            font-weight: 400;
+            font-style: italic;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUpHero 0.8s ease forwards 1.8s;
+            margin-bottom: 3.5rem;
+        }
+
+        @keyframes fadeInHero {
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUpHero {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            opacity: 0;
+            animation: fadeInHero 1s ease forwards 2.4s;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            will-change: transform;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--text-main);
+        }
+
+        .btn:hover {
+            transform: scale(1.03);
+        }
+        
+        .btn-primary:hover {
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.6);
+        }
+        
+        .btn-outline:hover {
+            border-color: var(--primary);
+            background-color: rgba(59, 130, 246, 0.05);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+        }
+
+        /* Sobre Mi */
+        .sobre-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .bio-text p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .skills-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 2rem;
+        }
+
+        .pill {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            transition: all 0.3s ease;
+            font-weight: 400;
+        }
+
+        .pill:hover {
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+            border-color: var(--primary);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .stat-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .stat-num {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+        
+        .stat-text {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        /* Habilidades */
+        #habilidades {
+            background-color: var(--bg-alt);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .skill-card {
+            padding: 2.5rem 2rem;
+        }
+
+        .skill-card h3 {
+            margin: 1.5rem 0 1rem;
+            font-size: 1.3rem;
+            color: var(--text-main);
+        }
+        
+        .skill-card p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .skill-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 40px rgba(6, 182, 212, 0.15);
+            border-color: var(--secondary);
+        }
+
+        /* Formacion */
+        .timeline-container {
+            position: relative;
+            padding-left: 2.5rem;
+            margin-top: 3rem;
+            max-width: 800px;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary);
+            transform-origin: top;
+            transform: scaleY(0);
+            will-change: transform;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 4rem;
+        }
+        
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -38px; /* 2.5rem + half dot */
+            top: 6px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: var(--bg-color);
+            border: 2px solid var(--primary);
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .timeline-item:hover .timeline-dot {
+            box-shadow: 0 0 0 8px rgba(59, 130, 246, 0.2);
+            background-color: var(--primary);
+        }
+
+        .timeline-year {
+            color: var(--secondary);
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .timeline-inst {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+
+        .timeline-title {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .cert-container {
+            margin-top: 5rem;
+        }
+        
+        .cert-container h3 {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: var(--text-main);
+        }
+
+        .certs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .cert-card {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            border-left: 4px solid #f59e0b;
+            padding: 1.5rem 2rem;
+        }
+
+        .cert-card:hover {
+            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.15);
+            transform: translateY(-4px);
+            border-color: #f59e0b;
+        }
+        
+        .cert-card .skill-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0;
+        }
+        
+        .cert-info h4 {
+            font-size: 1.15rem;
+            margin-bottom: 0.25rem;
+            color: var(--text-main);
+        }
+        
+        .cert-info p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Contacto */
+        #contacto {
+            text-align: center;
+        }
+
+        .contact-subtitle {
+            color: var(--text-muted);
+            font-size: 1.15rem;
+            margin-bottom: 4rem;
+            margin-top: -1rem;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .contact-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.25rem;
+            text-decoration: none;
+            color: var(--text-main);
+            position: relative;
+            padding: 2.5rem;
+        }
+
+        .contact-card:hover {
+            transform: scale(1.04);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.2);
+            border-color: var(--primary);
+        }
+        
+        .contact-icon {
+            width: 48px;
+            height: 48px;
+            fill: currentColor;
+            color: var(--primary);
+            transition: color 0.3s ease;
+        }
+        
+        .contact-card:hover .contact-icon {
+            color: var(--text-main);
+        }
+
+        .contact-card span {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .tooltip {
+            position: absolute;
+            top: -40px;
+            background: var(--primary);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .tooltip.show {
+            opacity: 1;
+        }
+
+        footer {
+            margin-top: 8rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Animations Observer Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stagger-1 { transition-delay: 100ms; }
+        .stagger-2 { transition-delay: 250ms; }
+        .stagger-3 { transition-delay: 400ms; }
+
+        /* Mobile Adjustments */
+        @media (max-width: 992px) {
+            .sobre-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .hero-title { font-size: 3.5rem; }
+            section { padding: 6rem 5% 4rem; }
+            .stats-grid { margin-top: 1rem; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero-title { font-size: 2.8rem; }
+            .skills-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .contact-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .cta-group { flex-direction: column; gap: 1rem; }
+            .timeline-container { padding-left: 2rem; }
+            .timeline-dot { left: -30px; }
+            h2 { font-size: 2rem; }
+        }
+        
+        @media (max-width: 480px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            .stat-card[style] { grid-column: span 1 !important; }
+            .hero-title { font-size: 2.2rem; }
+            .certs-grid { grid-template-columns: 1fr; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#hero" class="brand">MA</a>
+        <div class="nav-links">
+            <a href="#sobre-mi" class="nav-item">Sobre mí</a>
+            <a href="#habilidades" class="nav-item">Habilidades</a>
+            <a href="#formacion" class="nav-item">Formación</a>
+            <a href="#certificaciones" class="nav-item">Certificados</a>
+            <a href="#contacto" class="nav-item">Contacto</a>
+        </div>
+    </nav>
+
+    <section id="hero">
+        <div class="hero-bg" id="heroBg"></div>
+        <div class="container" style="z-index: 2; position: relative;">
+            <div class="typing-label">Economía · Finanzas · Datos<span class="cursor"></span></div>
+            <h1 class="hero-title" id="heroTitle">
+                <span class="line1" data-text="Miguel Ángel"></span>
+                <span class="line2" data-text="Paco Callamullo"></span>
+            </h1>
+            <p class="hero-subtitle">Estudiante de Economía en UAGRM · 5to Semestre</p>
+            <p class="hero-tagline">"Transformando datos en decisiones."</p>
+            <div class="cta-group">
+                <a href="#sobre-mi" class="btn btn-primary">Ver mi perfil ↓</a>
+                <a href="#contacto" class="btn btn-outline">Contactar</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="sobre-mi">
+        <div class="container">
+            <div class="sobre-grid">
+                <div class="bio-content reveal">
+                    <div class="section-label">01 / SOBRE MÍ</div>
+                    <h2>Apasionado por los datos y la economía.</h2>
+                    <div class="bio-text">
+                        <p>Soy Miguel Ángel, estudiante de 5to semestre de Economía con una fuerte orientación hacia el análisis cuantitativo. Mi enfoque principal es entender cómo las variables económicas interactúan y aplicar modelos estadísticos para resolver problemas reales.</p>
+                        <p>Durante mi trayectoria académica, he desarrollado habilidades excepcionales en herramientas de análisis y contabilidad, buscando siempre transformar conjuntos de datos complejos en información clave para la toma de decisiones estratégicas. Me considero una persona proactiva y con gran capacidad de liderazgo.</p>
+                    </div>
+                    <div class="skills-pills">
+                        <span class="pill">Excel Avanzado</span>
+                        <span class="pill">Estadística</span>
+                        <span class="pill">Modelación Económica</span>
+                        <span class="pill">Contabilidad</span>
+                        <span class="pill">Análisis de Riesgo</span>
+                        <span class="pill">Hojas de Cálculo</span>
+                    </div>
+                </div>
+                <div class="stats-grid reveal stagger-1" id="stats-section">
+                    <div class="stat-card glass-card">
+                        <div class="stat-num counter" data-target="5">0</div>
+                        <div class="stat-text">Semestre UAGRM</div>
+                    </div>
+                    <div class="stat-card glass-card">
+                        <div class="stat-num counter" data-target="2">0</div>
+                        <div class="stat-text">Certificados Completados</div>
+                    </div>
+                    <div class="stat-card glass-card" style="grid-column: span 2;">
+                        <div class="stat-num">Destacado</div>
+                        <div class="stat-text">Alumno Bachillerato</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="habilidades">
+        <div class="container">
+            <div class="section-label reveal" style="text-align: center;">02 / HABILIDADES</div>
+            <h2 class="reveal" style="text-align: center;">¿Qué puedo aportar?</h2>
+            
+            <div class="skills-grid">
+                <div class="skill-card glass-card reveal stagger-1">
+                    <div class="skill-icon">📊</div>
+                    <h3>Análisis de Datos</h3>
+                    <p>Excel avanzado, modelación estadística, interpretación de indicadores económicos.</p>
+                </div>
+                <div class="skill-card glass-card reveal stagger-2">
+                    <div class="skill-icon">💹</div>
+                    <h3>Finanzas & Economía</h3>
+                    <p>Microeconomía, análisis financiero, gestión de riesgos y toma de decisiones cuantitativa.</p>
+                </div>
+                <div class="skill-card glass-card reveal stagger-3">
+                    <div class="skill-icon">📋</div>
+                    <h3>Gestión & Liderazgo</h3>
+                    <p>Comunicación, trabajo en equipo, organización. Certificado en liderazgo por F.C.E.E.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="formacion">
+        <div class="container">
+            <div class="section-label reveal">03 / FORMACIÓN</div>
+            <h2 class="reveal">Mi trayectoria académica</h2>
+            
+            <div class="timeline-container" id="timeline">
+                <div class="timeline-line" id="timelineLine"></div>
+                
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-year">2023 – Presente</div>
+                    <div class="timeline-inst">Universidad Autónoma Gabriel René Moreno (UAGRM)</div>
+                    <div class="timeline-title">Lic. Economía — 5to Semestre en curso</div>
+                </div>
+                
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-year">2013 – 2023</div>
+                    <div class="timeline-inst">U.D. Doctor Hernández Sanabria Fernández</div>
+                    <div class="timeline-title">Bachiller en Humanidades — Alumno Destacado</div>
+                </div>
+            </div>
+
+            <div class="cert-container" id="certificaciones">
+                <h3 class="reveal">Certificaciones</h3>
+                <div class="certs-grid">
+                    <div class="cert-card glass-card reveal stagger-1">
+                        <div class="skill-icon">🏆</div>
+                        <div class="cert-info">
+                            <h4>De emprender a empresario</h4>
+                            <p>UAGRM</p>
+                        </div>
+                    </div>
+                    <div class="cert-card glass-card reveal stagger-2">
+                        <div class="skill-icon">⭐</div>
+                        <div class="cert-info">
+                            <h4>Liderazgo</h4>
+                            <p>F.C.E.E.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacto">
+        <div class="container">
+            <div class="section-label reveal">04 / CONTACTO</div>
+            <h2 class="reveal">¿Trabajamos juntos?</h2>
+            <p class="contact-subtitle reveal">Disponible para proyectos, colaboraciones y oportunidades académicas.</p>
+            
+            <div class="contact-grid">
+                <div class="contact-card glass-card reveal stagger-1" id="emailCard" style="cursor: pointer;">
+                    <div class="tooltip" id="emailTooltip">¡Copiado!</div>
+                    <svg class="contact-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                    </svg>
+                    <span>miguelpaco2005@gmail.com</span>
+                </div>
+                
+                <a href="https://wa.me/59173983541" target="_blank" rel="noopener" class="contact-card glass-card reveal stagger-2">
+                    <svg class="contact-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+                    </svg>
+                    <span>+591 73983541</span>
+                </a>
+                
+                <a href="https://www.instagram.com/eco_miguel22" target="_blank" rel="noopener" class="contact-card glass-card reveal stagger-3">
+                    <svg class="contact-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+                    </svg>
+                    <span>@eco_miguel22</span>
+                </a>
+            </div>
+            
+            <footer class="reveal">Miguel Ángel Paco Callamullo · Santa Cruz de la Sierra, Bolivia · 2026</footer>
+        </div>
+    </section>
+
+    <script>
+        // Hero background floatings dots
+        const heroBg = document.getElementById('heroBg');
+        const numDots = 10;
+        const colors = ['rgba(59, 130, 246, 0.4)', 'rgba(6, 182, 212, 0.3)'];
+        
+        for (let i = 0; i < numDots; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'floating-dot';
+            
+            // Random attributes
+            const size = Math.random() * 8 + 6; // 6px to 14px
+            const posX = Math.random() * 100;
+            const posY = Math.random() * 100;
+            const duration = Math.random() * 8 + 10; // 10s to 18s
+            const delay = Math.random() * 5;
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            dot.style.width = `${size}px`;
+            dot.style.height = `${size}px`;
+            dot.style.left = `${posX}%`;
+            dot.style.top = `${posY}%`;
+            dot.style.backgroundColor = color;
+            dot.style.animationDuration = `${duration}s`;
+            dot.style.animationDelay = `${delay}s`;
+            
+            heroBg.appendChild(dot);
+        }
+
+        // Hero Typography Animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const lines = document.querySelectorAll('.hero-title span[data-text]');
+            let delayOffset = 0;
+            
+            lines.forEach((line, lineIndex) => {
+                const text = line.getAttribute('data-text');
+                line.innerHTML = ''; // clear text
+                
+                for (let i = 0; i < text.length; i++) {
+                    const charSpan = document.createElement('span');
+                    // Retain space format
+                    charSpan.innerHTML = text[i] === ' ' ? '&nbsp;' : text[i];
+                    charSpan.className = 'char';
+                    charSpan.style.transition = `transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease`;
+                    charSpan.style.transitionDelay = `${delayOffset}ms`;
+                    
+                    // Apply gradient per character with offset to simulate continuous gradient
+                    if (lineIndex === 0) {
+                        charSpan.style.backgroundImage = 'linear-gradient(90deg, #3b82f6, #06b6d4)';
+                        charSpan.style.backgroundSize = `${Math.max(1, text.length) * 100}% 100%`;
+                        charSpan.style.backgroundPosition = `${(i / Math.max(1, text.length - 1)) * 100}% 0`;
+                        charSpan.style.webkitBackgroundClip = 'text';
+                        charSpan.style.webkitTextFillColor = 'transparent';
+                    }
+                    
+                    line.appendChild(charSpan);
+                    delayOffset += 30; // 30ms stagger
+                }
+                if (lineIndex === 0) delayOffset += 80; // Small pause between lines
+            });
+            
+            // Trigger animation shortly after load
+            setTimeout(() => {
+                document.querySelectorAll('.char').forEach(char => {
+                    char.style.opacity = '1';
+                    char.style.transform = 'translateY(0)';
+                });
+            }, 300);
+        });
+
+        // Intersection Observer for scroll animations
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    
+                    // Trigger counters when stats section is revealed
+                    if (entry.target.id === 'stats-section' || entry.target.contains(document.querySelector('.counter'))) {
+                        const counters = entry.target.querySelectorAll('.counter');
+                        counters.forEach(counter => {
+                            // Only run animation once if it starts at 0
+                            if(counter.innerText !== "0") return;
+                            
+                            const target = +counter.getAttribute('data-target');
+                            const increment = target / 40; // 40 frames
+                            let current = 0;
+                            
+                            const updateCounter = () => {
+                                current += increment;
+                                if (current < target) {
+                                    counter.innerText = Math.ceil(current);
+                                    requestAnimationFrame(updateCounter);
+                                } else {
+                                    counter.innerText = target;
+                                }
+                            };
+                            updateCounter();
+                        });
+                    }
+                    
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // Timeline drawing scroll listener
+        const tlContainer = document.getElementById('timeline');
+        const timelineLine = document.getElementById('timelineLine');
+        
+        if (tlContainer && timelineLine) {
+            const timelineObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        window.addEventListener('scroll', updateTimeline, { passive: true });
+                        updateTimeline();
+                    } else {
+                        // Keep active when scrolling past, but can remove to save perf
+                    }
+                });
+            }, { threshold: 0 });
+            
+            timelineObserver.observe(tlContainer);
+
+            function updateTimeline() {
+                const rect = tlContainer.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+                
+                // Only animate line if container is in view or scrolled past
+                if (rect.top < windowHeight * 0.8) {
+                    // Calculate how far down we've scrolled past the starting point
+                    const scrollProgress = (windowHeight * 0.8 - rect.top);
+                    // Calculate ratio: progress / total height of container
+                    const progressRatio = Math.min(Math.max(scrollProgress / rect.height, 0), 1);
+                    
+                    // Apply scaleY based on scroll
+                    timelineLine.style.transform = `scaleY(${progressRatio})`;
+                }
+            }
+        }
+
+        // Active Nav Link highlight on scroll
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-links a');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            const scrollY = window.pageYOffset;
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - sectionHeight / 3)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(a => {
+                a.classList.remove('active');
+                if (a.getAttribute('href') === `#${current}`) {
+                    a.classList.add('active');
+                }
+            });
+        }, { passive: true });
+
+        // Copy Email to Clipboard
+        const emailCard = document.getElementById('emailCard');
+        const emailTooltip = document.getElementById('emailTooltip');
+        
+        if(emailCard && emailTooltip) {
+            emailCard.addEventListener('click', async () => {
+                const email = "miguelpaco2005@gmail.com";
+                
+                try {
+                    await navigator.clipboard.writeText(email);
+                    showTooltip();
+                } catch (err) {
+                    // Fallback
+                    const textArea = document.createElement("textarea");
+                    textArea.value = email;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    try {
+                        document.execCommand('copy');
+                        showTooltip();
+                    } catch (e) {
+                        console.error('Fallback copy failed', e);
+                    }
+                    document.body.removeChild(textArea);
+                }
+                
+                function showTooltip() {
+                    emailTooltip.classList.add('show');
+                    setTimeout(() => {
+                        emailTooltip.classList.remove('show');
+                    }, 2000);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
